@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>React Project</title>
+        <script src="https://unpkg.com/react@16.7.0/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@16.7.0/umd/react-dom.development.js"></script>
+        <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+        <style>
+            .heading {
+                color: purple;
+            }
+        </style>
+    
+    </head>
+    <body>
+        <div id="root"></div>
+        <script type="text/babel">
+            const RiverList = [
+                {id: 1, name: "Brahmaputra", origin: "Tibet"},
+                {id: 2, name: "Bharali", origin: "Himalayas"},
+                {id: 3, name: "Nameri", origin: "Chima"}
+            ]
+            
+            const App = ({rivers}) => (
+                <ul>
+                    {rivers.map( river => 
+                        <li key={river.id}>{river.name} | Origin : {river.origin}</li>
+                    )}
+                </ul>
+            )
+            
+            ReactDOM.render(
+                <App rivers={RiverList}/>,
+                document.getElementById("root")
+            );
+        </script>
+    </body>
+</html>
