@@ -11,18 +11,30 @@ const BookList = [
 
 // const Library = ({books}) => {
 class Library extends Component {
-	constructor(props) {
-		super(props)
-		this.state = {
-			open: open
-		}
+	// constructor(props) {
+	// 	super(props)
+	// 	this.state = {
+	// 		open: true
+	// 	}
+	// 	this.toggleOpenClosed = this.toggleOpenClosed.bind(this)
+	// }
+	state = { 
+		open: true,
+		freeBookmark: true,
+		hiring: true
+	}
+
+	toggleOpenClosed = ()  => {
+		this.setState(prevState => ({
+			open: !this.state.open
+		}))
 	}
 
 	render() {
-		console.log(this.state)
 		const  { books } = this.props
 		return (
 			<div>
+				{ this.state.hiring ? <Hiring /> : <NotHiring /> }
 				<h1>The library is: {this.state.open ? 'open' : 'closed'} </h1>
 				{books.map(
 					(book, i) => 
@@ -30,21 +42,33 @@ class Library extends Component {
 							key={i}
 							title={book.title} 
 							author={book.author} 
-							pages={book.pages} />
+							pages={book.pages} 
+							freeBookmark={this.state.freeBookmark} />
 				)}
+				<button onClick={this.toggleOpenClosed}>Toggle open close</button>
 			</div>
 		)
 	}
 }
 
+const Hiring = () => 
+	<div>
+		<p>The library is hiring. Go to www.library.com/jobs for more.</p>
+	</div>
+
+const NotHiring = () => 
+	<div>
+		<p>The library is not hiring. Check back later for more info.</p>
+	</div>
 
 
-const Book = ({title, author, pages}) => {
+const Book = ({title, author, pages, freeBookmark}) => {
 	return(
 		<section>
 			<h2> {title} </h2>
 			<p> by: {author} </p>
 			<p> Pages: {pages} pages </p>
+			<p> The book is: {freeBookmark ? "bookmarked" : "not book marked"} </p>
 		</section>
 	)
 }
