@@ -28,7 +28,7 @@ class Library extends Component {
 
 	componentDidMount() {
 		this.setState({loading: true})
-		fetch("https://hplussport.com/api/products/order/price/sort/asc/qty/3")
+		fetch("https://hplussport.com/api/products/order/price/sort/asc/qty/1")
 			.then(data => data.json())
 			.then(data => this.setState({data , loading: false}))
 
@@ -54,10 +54,10 @@ class Library extends Component {
 						: <div>
 								{ this.state.data.map(product => {
 									return (
-										<div>
+										<div key={product.id}>
 											<h3> Library Product of the Week!</h3>
 											<h4>{product.name}</h4>
-											<img src={product.image} height={100}/>
+											<img alt={product.name} src={product.image} height={100}/>
 										</div>
 									)
 								}
@@ -102,7 +102,39 @@ const Book = ({title, author, pages, freeBookmark}) => {
 	)
 }
 
+class FavouriteColorPicker extends Component {
+
+	state = {
+		value: ''
+	}
+
+	newColor = e => {
+		this.setState({ value: e.target.value })
+	}
+
+	submit = (e) => {
+		console.log(`New Color: ${this.state.value}`)
+		e.preventDefault();
+	}
+
+	render() {
+		return (
+			<form onSubmit={this.submit}>
+				<label>Favourite Color : 
+					<input 
+						type='color'
+						onChange={this.newColor }/>
+				</label>
+				<button>Submit</button>
+			</form>
+		)
+	}
+}
+
 render(
-	<Library books={BookList}/>,
+	<div>
+		<Library books={BookList} />
+		<FavouriteColorPicker />
+	</div>,
 	document.getElementById('root')
 )
